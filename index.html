@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storymaker Toy</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Create Your Own funny Story :)</h1>
+
+<div class="image">
+    <img src="./photos/91ELxuI3yjL._AC_UF1000,1000_QL80_.jpg" alt="child story book image" style="width: 100px; height: 100px;">
+</div>
+
+<div class="container">
+  <button id="nounButton">Noun</button>
+  <button id="verbButton">Verb</button>
+  <button id="adjectiveButton">Adjective</button>
+  <button id="prepositionButton">Preposition</button>
+  <button id="adverbButton">Adverb</button>
+  <button id="viewStoryButton">View Story</button>
+  <button id="randomStoryButton">Random Story</button>
+  <button id="resetButton">Reset</button>
+</div>
+<div id="story" style="margin-top: 20px;"></div>
+
+<script>
+  // words/phrases
+  const nouns = ['dog', 'cat', 'bird', 'tree', 'house'];
+  const verbs = ['ran', 'jumped', 'flew', 'climbed', 'ate'];
+  const adverbs = ['quickly', 'slowly', 'loudly', 'softly', 'carefully'];
+  const prepositions = ['on', 'under', 'beside', 'in', 'above'];
+  const adjectives = ['happy', 'sad', 'big', 'small', 'funny'];
+
+
+  // Button 
+  const nounButton = document.getElementById('nounButton');
+  const verbButton = document.getElementById('verbButton');
+  const adjectiveButton = document.getElementById('adjectiveButton');
+  const prepositionButton = document.getElementById('prepositionButton');
+  const adverbButton = document.getElementById('adverbButton');
+  const viewStoryButton = document.getElementById('viewStoryButton');
+  const randomStoryButton = document.getElementById('randomStoryButton');
+  const resetButton = document.getElementById('resetButton');
+
+  // Output 
+  const storyOutput = document.getElementById('story');
+
+  // Function for button clicks
+  nounButton.addEventListener('click', () => cycleWords(nouns, 'noun'));
+  verbButton.addEventListener('click', () => cycleWords(verbs, 'verb'));
+  adjectiveButton.addEventListener('click', () => cycleWords(adjectives, 'adjective'));
+  prepositionButton.addEventListener('click', () => cycleWords(prepositions, 'preposition'));
+  adverbButton.addEventListener('click', () => cycleWords(adverbs, 'adverb'));
+  viewStoryButton.addEventListener('click', viewStory);
+  randomStoryButton.addEventListener('click', generateRandomStory);
+  resetButton.addEventListener('click', resetStory);
+
+  // cycle through the words/phrases
+  function cycleWords(wordArray, partOfSpeech) {
+    let currentIndex = wordArray.indexOf(storyOutput.dataset[partOfSpeech]);
+    currentIndex = (currentIndex + 1) % wordArray.length;
+    storyOutput.dataset[partOfSpeech] = wordArray[currentIndex];
+    storyOutput.textContent = `${storyOutput.dataset.noun} ${storyOutput.dataset.verb} ${storyOutput.dataset.adjective} ${storyOutput.dataset.preposition} ${storyOutput.dataset.adverb}`;
+  }
+
+  // view the completed story
+function viewStory() {
+  const noun = storyOutput.dataset.noun || 'noun';
+  const verb = storyOutput.dataset.verb || 'verb';
+  const adjective = storyOutput.dataset.adjective || 'adjective';
+  const preposition = storyOutput.dataset.preposition || 'preposition';
+  const adverb = storyOutput.dataset.adverb || 'adverb';
+  storyOutput.textContent = `The ${adjective} ${noun} ${verb} ${preposition} the ${adjective} ${noun} ${adverb}.`;
+}
+
+  // generate random story
+function generateRandomStory() {
+    const randomNoun = getRandomWord(nouns);
+    const randomVerb = getRandomWord(verbs);
+    const randomAdjective = getRandomWord(adjectives);
+    const randomPreposition = getRandomWord(prepositions);
+    const randomAdverb = getRandomWord(adverbs);
+    storyOutput.textContent = `The ${randomAdjective} ${randomNoun} ${randomVerb}  ${randomPreposition} The Monkeys ${randomAdverb}.`;
+}
+  
+  // reset the story
+  function resetStory() {
+    storyOutput.textContent = '';
+  }
+
+  // get a random word from array
+  function getRandomWord(wordArray) {
+    return wordArray[Math.floor(Math.random() * wordArray.length)];
+  }
+</script>
+</body>
+</html>
